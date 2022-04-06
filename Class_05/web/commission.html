@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>佣金问题</title>
+    <script>
+        function action(){
+            var locks, stocks, barrels;
+            var lockPrice, stockPrice, barrelPrice;
+            var lockSales, stockSales, barrelSales;
+            var sales, commission;            
+
+            locks=document.getElementById('a').value;
+            stocks=document.getElementById('b').value;
+            barrels=document.getElementById('c').value;
+
+            lockPrice = 45.0;
+            stockPrice = 30.0;
+            barrelPrice = 25.0;
+
+            if (locks == -1){
+                commission =  "程序终止";
+            } else if (locks < 1 || locks > 70 ) {
+                commission =  "locks的取值不在有效范围1~70内";
+            } else if (stocks < 1 || stocks > 80 ) {
+                commission =  "stocks的取值不在有效范围1~80内";
+            } else if (barrels < 1 || barrels > 90 ) {
+                commission =  "barrels的取值不在有效范围1~90内";
+            }else {
+                lockSales = lockPrice * locks;
+                stockSales = stockPrice * stocks;
+                barrelSales = barrelPrice * barrels;
+                sales = lockSales + stockSales + barrelSales;
+
+                if (sales > 1800.0){
+                    commission = 0.10 * 1000.0;
+                    commission = commission + 0.15 * 800.0;
+                    commission = commission + 0.20 * (sales-1800.0);
+                } else if (sales >1000.0) {
+                    commission = 0.10 * 1000.0;
+                    commission = commission + 0.15* (sales-1000.0);
+                }else {
+                    commission = 0.10 * sales;
+                }
+
+                commission =  commission + "美元";
+            }
+            document.getElementById('result').value=commission;
+        }
+    </script>
+</head>
+<body>
+    <h1>佣金问题</h1>
+    <h3><a href="./index.html" id="index" class="index">返回主页</a></h3>
+    <div>
+        <span>某步枪经销商销售某制造商生产的枪枪托和枪管，枪栓45美元，枪托30美元，枪管25美元。</span><br>
+        <span>经销商每月至少要售出一支完整的步枪，且经销商每月最多可售出枪栓70支，枪托80支，枪管90支。</span><br>
+        <span>每月月底，经销商向制造商报告当月销售情况，制造商根据销售量计算经销商应得的佣金。</span><br>
+        <span>销售额不超过1000美元的部分，佣金为10%，大于1000且不超过1800美元的部分为15%，超过1800美元的部分为20%。</span><br>
+        <br>
+        <table border="0">
+            <tr>
+                <th>枪栓数量</th>
+                <th>枪托数量</th>
+                <th>枪管数量</th>
+                <th>佣金</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td><input type="text" id="a"></td>
+                <td><input type="text" id="b"></td>
+                <td><input type="text" id="c"></td>
+                <td><input type="text" id="result" disabled style="width: 220px"></td>
+                <td><input onClick="action()" type="button" id="action" value="计算结果"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
