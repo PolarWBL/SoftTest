@@ -1,5 +1,8 @@
 package nextdate;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author wengboliang 2019111413
  */
@@ -11,15 +14,7 @@ public class NextDate {
         c2 = (1<=month) && (month<=12);
         c3 = (1900<=year) && (year<=2050);
 
-        if (!c1){
-            return "非法参数!";
-        }
-
-        if (!c2) {
-            return "非法参数!";
-        }
-
-        if (!c3) {
+        if (!(c1 && c2 && c3)){
             return "非法参数!";
         }
 
@@ -45,11 +40,9 @@ public class NextDate {
             case 11:
                 if (day < 30){
                     tomorrowDay = day + 1;
-                }else if (day == 30){
+                }else{
                     tomorrowDay = 1;
                     tomorrowMonth = month + 1;
-                }else {
-                    return "非法参数!";
                 }
                 break;
             case 12:
@@ -75,19 +68,16 @@ public class NextDate {
                         tomorrowDay = 1;
                         tomorrowMonth = 3;
                     }
-                }else if (day == 29){
+                }else{
                     if (isLeapYear){
                         tomorrowDay = 1;
                         tomorrowMonth = 3;
                     }else {
                         return "非法参数!";
                     }
-                }else {
-                    return "非法参数!";
                 }
                 break;
             default:
-                return "出现错误!";
         }
 
         return  tomorrowYear + "年" + tomorrowMonth + "月" + tomorrowDay + "日";

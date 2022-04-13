@@ -12,11 +12,12 @@ public class Class05Test {
 
   @BeforeAll
   static void setUp() {
-    System.setProperty("webdriver.chrome.driver", "D:\\Work Space\\IdeaProjects\\SoftTest\\Class_05\\src\\main\\resources\\chromedriver.exe");
+    System.setProperty("webdriver.chrome.driver",
+            "D:\\Work Space\\IdeaProjects\\SoftTest\\Class_05\\src\\main\\resources\\chromedriver.exe");
     driver = new ChromeDriver();
     driver.manage().window().maximize();
-
   }
+
   @AfterAll
   static void tearDown() {
     driver.quit();
@@ -32,7 +33,6 @@ public class Class05Test {
     driver.findElement(By.id("c")).sendKeys(barrels+"");
     driver.findElement(By.id("action")).click();
     String result = driver.findElement(By.id("result")).getAttribute("value");
-
     Assertions.assertEquals(expected, result);
   }
 }
