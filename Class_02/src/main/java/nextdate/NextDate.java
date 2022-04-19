@@ -1,8 +1,5 @@
 package nextdate;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author wengboliang 2019111413
  */
@@ -18,7 +15,7 @@ public class NextDate {
             return "非法参数!";
         }
 
-        boolean isLeapYear = ((year%400)==0) || (((year%4)==0) && ((year%100)!=0));
+        boolean isLeapYear = (((year % 4) == 0) && ((year % 100) != 0)) || ((year % 400) == 0);
 
         switch (month){
             case 1:
