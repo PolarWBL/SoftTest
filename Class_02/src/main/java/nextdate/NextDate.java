@@ -6,16 +6,10 @@ package nextdate;
 public class NextDate {
     public String getNextDate(int day, int month, int year){
         int tomorrowDay = day, tomorrowMonth = month, tomorrowYear = year;
-        boolean c1, c2, c3;
-        c1 = (1<=day) && (day<=31);
-        c2 = (1<=month) && (month<=12);
-        c3 = (1900<=year) && (year<=2050);
 
-        if (!(c1 && c2 && c3)){
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2050) {
             return "非法参数!";
         }
-
-        boolean isLeapYear = (((year % 4) == 0) && ((year % 100) != 0)) || ((year % 400) == 0);
 
         switch (month){
             case 1:
@@ -37,9 +31,11 @@ public class NextDate {
             case 11:
                 if (day < 30){
                     tomorrowDay = day + 1;
-                }else{
+                } else if (day == 30) {
                     tomorrowDay = 1;
                     tomorrowMonth = month + 1;
+                }else{
+                    return "非法参数!";
                 }
                 break;
             case 12:
@@ -56,6 +52,7 @@ public class NextDate {
                 }
                 break;
             case 2:
+                boolean isLeapYear = (((year % 4) == 0) && ((year % 100) != 0)) || ((year % 400) == 0);
                 if (day<28){
                     tomorrowDay = day + 1;
                 }else if (day == 28){
@@ -65,13 +62,11 @@ public class NextDate {
                         tomorrowDay = 1;
                         tomorrowMonth = 3;
                     }
-                }else{
-                    if (isLeapYear){
-                        tomorrowDay = 1;
-                        tomorrowMonth = 3;
-                    }else {
-                        return "非法参数!";
-                    }
+                }else if (day == 29 && isLeapYear){
+                    tomorrowDay = 1;
+                    tomorrowMonth = 3;
+                }else {
+                    return "非法参数!";
                 }
                 break;
             default:
