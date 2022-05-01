@@ -23,7 +23,6 @@ public class NextDay {
             }
             day++;
             return year + "年" + month + "月" + day + "日";
-
         } catch (RuntimeException e) {
             return "非法参数!";
         }
