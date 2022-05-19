@@ -3,57 +3,34 @@ package nextdate;
 import java.io.IOException;
 
 /**
- * nextday问题.
+ * NextDay问题.
  * @author Boliang Weng
  */
 public class NextDay {
-    public static final int JANUARY = 1;
-    public static final int FEBRUARY = 2;
-    public static final int MARCH = 3;
-    public static final int APRIL = 4;
-    public static final int MAY = 5;
-    public static final int JUNE = 6;
-    public static final int JULY = 7;
-    public static final int AUGUST = 8;
-    public static final int SEPTEMBER = 9;
-    public static final int OCTOBER = 10;
-    public static final int NOVEMBER = 11;
-    public static final int DECEMBER = 12;
-
-    public static final int DAY_28 = 28;
-    public static final int DAY_29 = 29;
-    public static final int DAY_30 = 30;
-    public static final int DAY_31 = 31;
-
-    public static final int YEAR_MIN = 1900;
-    public static final int YEAR_MAX = 2050;
-
-    public static final int FOUR = 4;
-    public static final int HUNDRED = 100;
-
-
-  /**
-   * nextday问题.
-   * @param day 天数
-   * @param month 月份
-   * @param year 年份
-   * @return 返回结果字符串
-   */
+    /**
+    * NextDay问题.
+    * @param day 天数
+    * @param month 月份
+    * @param year 年份
+    * @return 返回结果字符串
+    */
     public String nextDate (final int day, final int month, final int year) {
         int nextDay = day;
         int nextMonth = month;
         int nextYear = year;
         try {
-            String message = null;
+            String message;
             checkParams(day, month, year);
-            if (year == YEAR_MAX && month == DECEMBER && day == DAY_31) {
-                throw new IOException("超过时间范围");
-            }else if (month == DECEMBER && day == DAY_31) {
+            if (year == Constant.YEAR_MAX
+                    && month == Constant.DECEMBER
+                    && day == Constant.DAY_31) {
+                throw new IOException(Constant.ERROR_INPUT);
+            }else if (month == Constant.DECEMBER && day == Constant.DAY_31) {
                 nextDay = 1;
                 nextMonth = 1;
                 nextYear++;
                 message =  nextYear + "年" + nextMonth + "月" + nextDay + "日";
-            }else if (isLastDay(day, month, year)) {
+            }else if (Boolean.TRUE.equals(isLastDay(day, month, year))) {
                 nextDay = 1;
                 nextMonth++;
                 message = nextYear + "年" + nextMonth + "月" + nextDay + "日";
@@ -64,7 +41,7 @@ public class NextDay {
             return message;
         }
         catch (IOException e) {
-            return "非法参数!";
+            return Constant.ERROR;
         }
     }
 
@@ -74,8 +51,9 @@ public class NextDay {
      * @return 返回true或false
      */
     private Boolean isLeapYear (final int year) {
-        return (((year % FOUR) == 0) && ((year % HUNDRED) != 0))
-                || ((year % (FOUR*HUNDRED)) == 0);
+        return (((year % Constant.FOUR) == 0)
+                && ((year % Constant.HUNDRED) != 0))
+                || ((year % (Constant.FOUR * Constant.HUNDRED)) == 0);
     }
 
     /**
@@ -90,41 +68,41 @@ public class NextDay {
             final int day,
             final int month,
             final int year) throws IOException {
-        boolean result = false;
+        boolean result;
 
         switch (month) {
-            case JANUARY:
-            case MARCH:
-            case MAY:
-            case JULY:
-            case AUGUST:
-            case OCTOBER:
-            case DECEMBER:
-                result = day == DAY_31;
+            case Constant.JANUARY:
+            case Constant.MARCH:
+            case Constant.MAY:
+            case Constant.JULY:
+            case Constant.AUGUST:
+            case Constant.OCTOBER:
+            case Constant.DECEMBER:
+                result = day == Constant.DAY_31;
                 break;
-            case APRIL:
-            case JUNE:
-            case SEPTEMBER:
-            case NOVEMBER:
-                if (day == DAY_31) {
-                    throw new IOException("天数不合法");
+            case Constant.APRIL:
+            case Constant.JUNE:
+            case Constant.SEPTEMBER:
+            case Constant.NOVEMBER:
+                if (day == Constant.DAY_31) {
+                    throw new IOException(Constant.ERROR_DAY);
                 }
-                result = day == DAY_30;
+                result = day == Constant.DAY_30;
                 break;
-            case FEBRUARY:
-                if (day >= DAY_30) {
-                    throw new IOException("天数不合法");
+            case Constant.FEBRUARY:
+                if (day >= Constant.DAY_30) {
+                    throw new IOException(Constant.ERROR_DAY);
                 }
-                if (isLeapYear(year)) {
-                    result = day == DAY_29;
-                } else if (day == DAY_29) {
-                    throw new IOException("天数不合法");
+                if (Boolean.TRUE.equals(isLeapYear(year))) {
+                    result = day == Constant.DAY_29;
+                } else if (day == Constant.DAY_29) {
+                    throw new IOException(Constant.ERROR_DAY);
                 }else {
-                    result = day == DAY_28;
+                    result = day == Constant.DAY_28;
                 }
                 break;
             default:
-                throw new IOException("月份错误");
+                throw new IOException(Constant.ERROR_MONTH);
         }
         return result;
     }
@@ -141,12 +119,12 @@ public class NextDay {
             final int month,
             final int year) throws IOException {
         if (day < 1
-                || day >DAY_31
+                || day >Constant.DAY_31
                 || month < 1
-                || month > DECEMBER
-                || year < YEAR_MIN
-                || year > YEAR_MAX) {
-            throw new IOException("输入范围错误");
+                || month > Constant.DECEMBER
+                || year < Constant.YEAR_MIN
+                || year > Constant.YEAR_MAX) {
+            throw new IOException(Constant.ERROR_INPUT);
         }
     }
 }
