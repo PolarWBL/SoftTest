@@ -3,7 +3,7 @@ package nextdate;
 /**
  * @author Boliang Weng
  */
-public class Constant {
+public class Cons {
     public static final int JANUARY = 1;
     public static final int FEBRUARY = 2;
     public static final int MARCH = 3;
